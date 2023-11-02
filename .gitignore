@@ -152,3 +152,4 @@ cython_debug/
 #.idea/
 /data/testing_set/
 /data/training_set/
+.idea/.name
