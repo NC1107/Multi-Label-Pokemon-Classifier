@@ -20,11 +20,18 @@ def populate_sets():
     if os.listdir(training_directory) != [] or os.listdir(testing_directory) != []:
         print("Directories not empty")
         return
-    for images in os.walk(image_directory):
-        if random.random() < training_ratio:
-            copy_tree(images[0], training_directory + images[0].split("/")[-1])
-        else:
-            copy_tree(images[0], testing_directory + images[0].split("/")[-1])
+    # iterate through all pokemon, place 80% of each pokemons images in training set, 20% in testing set
+    for pokemon in os.listdir(image_directory):
+        images = os.listdir(image_directory + pokemon)
+        random.shuffle(images)
+        training_set = images[:int(len(images) * training_ratio)]
+        testing_set = images[int(len(images) * training_ratio):]
+        copy_tree(image_directory + pokemon, training_directory + pokemon, verbose=0)
+        copy_tree(image_directory + pokemon, testing_directory + pokemon, verbose=0)
+        for image in training_set:
+            os.remove(training_directory + pokemon + "/" + image)
+        for image in testing_set:
+            os.remove(testing_directory + pokemon + "/" + image)
 
 
 def generate_directories():

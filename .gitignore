@@ -156,3 +156,4 @@ cython_debug/
 *.xml
 .idea/misc.xml
 .idea/Multi-Label-Pokemon-Classifier.iml
+data/.DS_Store
