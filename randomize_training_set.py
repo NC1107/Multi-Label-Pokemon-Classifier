@@ -37,16 +37,16 @@ def populate_sets():
 
     # iterate through all pokemon, place 80% of each pokemons images in training set, 20% in testing set
     for pokemon in os.listdir(rotated_directory):
-        images = os.listdir(rotated_directory + pokemon)
-        random.shuffle(images)
-        training_set = images[int(len(images) * training_ratio):]
-        testing_set = images[:int(len(images) * training_ratio)]
+        # images = os.listdir(rotated_directory + pokemon)
+        # random.shuffle(images)
+        # training_set = images[int(len(images) * training_ratio):]
+        # testing_set = images[:int(len(images) * training_ratio)]
         copy_tree(rotated_directory + pokemon, training_directory + pokemon, verbose=0)
-        copy_tree(rotated_directory + pokemon, testing_directory + pokemon, verbose=0)
-        for image in training_set:
-            os.remove(training_directory + pokemon + "/" + image)
-        for image in testing_set:
-            os.remove(testing_directory + pokemon + "/" + image)
+        # copy_tree(rotated_directory + pokemon, testing_directory + pokemon, verbose=0)
+        # for image in training_set:
+        #     os.remove(training_directory + pokemon + "/" + image)
+        # for image in testing_set:
+        #     os.remove(testing_directory + pokemon + "/" + image)
 
 
 def generate_directories():
@@ -72,10 +72,6 @@ def cleanup_directories():
     if os.path.exists(testing_directory):
         print("removing testing directory")
         shutil.rmtree(testing_directory)
-
-    if os.path.exists(rotated_directory):
-        print("removing rotated directory")
-        shutil.rmtree(rotated_directory)
 
 def generate_rotated_images():
     for pokemon in os.listdir(image_directory):
