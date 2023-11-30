@@ -2,6 +2,7 @@ import os
 import random
 from PIL import Image
 import shutil
+from distutils.dir_util import copy_tree
 import keras
 import tensorflow as tf
 
@@ -16,7 +17,7 @@ def populate_sets():
     # check if directories exist
     if not os.path.exists(training_directory) or not os.path.exists(testing_directory) or not os.path.exists(
             rotated_directory):
-        print("Direr,8ectories not found")
+        print("Directories not found")
         return
     # check if directories are empty
     if os.listdir(training_directory) != [] or os.listdir(testing_directory) != []:
@@ -80,7 +81,17 @@ def generate_rotated_images():
             rotate180.save(rotated_directory + pokemon + "/" + "rotate180" + image)
             rotate270.save(rotated_directory + pokemon + "/" + "rotate270" + image)
             mirrored.save(rotated_directory + pokemon + "/" + "mirrored" + image)
-    return 0
+
+
+def automatically_setup_repository():
+    cleanup_directories()
+    print("----CLEANUP COMPLETE----")
+    generate_directories()
+    print("----DIRECTORIES GENERATED----")
+    generate_rotated_images()
+    print("----ROTATED IMAGES GENERATED----")
+    populate_sets()
+    print("----SETS POPULATED----")
 
 
 def setup_repository():
@@ -150,5 +161,6 @@ def pick_random_rotated_image() -> str:
     random_image = images[random.randint(0, len(images) - 1)]
     # return the full path to the image
     return "data/rotated_set/" + random_pokemon + "/" + random_image
+
 
 # function to load and test the model on a random image

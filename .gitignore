@@ -155,3 +155,4 @@ cython_debug/
 /data/rotated_set/
 *.xml
 .idea
+.DS_Store
