@@ -68,7 +68,6 @@ def cleanup_directories():
 
 def generate_rotated_images():
     for pokemon in os.listdir(image_directory):
-        os.makedirs(rotated_directory + pokemon)
         for image in os.listdir(image_directory + pokemon):
             original = Image.open(image_directory + pokemon + "/" + image)
 
@@ -88,7 +87,8 @@ def automatically_setup_repository():
     print("----CLEANUP COMPLETE----")
     generate_directories()
     print("----DIRECTORIES GENERATED----")
-    generate_rotated_images()
+    if not os.path.exists(rotated_directory):
+        generate_rotated_images()
     print("----ROTATED IMAGES GENERATED----")
     populate_sets()
     print("----SETS POPULATED----")
