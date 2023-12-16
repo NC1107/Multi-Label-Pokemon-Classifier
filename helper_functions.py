@@ -1,10 +1,8 @@
 import os
 import random
-from PIL import Image
 import shutil
+from PIL import Image
 from distutils.dir_util import copy_tree
-import keras
-import tensorflow as tf
 
 training_ratio = 0.8
 image_directory = "data/images/"
@@ -68,18 +66,26 @@ def cleanup_directories():
 
 def generate_rotated_images():
     for pokemon in os.listdir(image_directory):
+        print("generating rotated images for " + pokemon)
         for image in os.listdir(image_directory + pokemon):
+            print("generating rotated images for " + pokemon + "/" + image)
             original = Image.open(image_directory + pokemon + "/" + image)
+            print("opened image")
 
-            rotate90 = original.rotate(90)
-            rotate180 = original.rotate(180)
-            rotate270 = original.rotate(270)
-            mirrored = original.transpose(method=Image.FLIP_LEFT_RIGHT)
+            # rotate 90
+            rotated = original.rotate(90)
+            rotated.save(rotated_directory + pokemon + "/" + image.replace(".png", "_90.png"))
 
-            rotate90.save(rotated_directory + pokemon + "/" + "rotate90" + image)
-            rotate180.save(rotated_directory + pokemon + "/" + "rotate180" + image)
-            rotate270.save(rotated_directory + pokemon + "/" + "rotate270" + image)
-            mirrored.save(rotated_directory + pokemon + "/" + "mirrored" + image)
+            # rotate 180
+            rotated = original.rotate(180)
+            rotated.save(rotated_directory + pokemon + "/" + image.replace(".png", "_180.png"))
+
+            # rotate 270
+            rotated = original.rotate(270)
+            rotated.save(rotated_directory + pokemon + "/" + image.replace(".png", "_270.png"))
+
+
+
 
 
 def automatically_setup_repository():
